@@ -66,27 +66,24 @@ declare interface UserApi_EditPassword {
  * 获取管理员信息(当前登录用户) - 响应数据
  */
 declare interface UserApi_GetAdminResponse {
-    "admin_info": UserApi_GetAdminItem
+    id: number;
+    username: string;
+    account: string;
+    avatar: string;
+    status: number;
 }
-declare interface UserApi_GetAdminItem {
-    "id": 1, //管理员ID
-    "account": "gongkexian", //登录账号
-    "phone": "15919477650", //联系方式
-    "realname": "龚科先", //姓名
-    "last_login_time": 1654913032, //最后登录时间
-    "last_ip": "127.0.0.1", //最后登录IP
-    "role_id": 1, //角色ID
-    role_code: string, // 角色标识
-    "status": 1, //账号状态 1正常 2禁用
-    "company_id": 1, //所属公司ID
-    "created_at": 1654481189, //创建时间
-    "menu_id": "1,2,4,5,6,7,8" //有权限的菜单ID，超管为all
-}
+
 
 /**
  * 用户信息
  */
-declare interface UserAdminInfo extends UserApi_GetAdminItem {
+declare interface UserAdminInfo extends UserApi_GetAdminResponse {
+
+    "id": number,
+    "account": string,
+    "username": string,
+    "avatar": string,
+    "status": number,
     photo: string,
     time: string | number,
     roles: string[],

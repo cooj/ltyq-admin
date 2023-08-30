@@ -33,9 +33,9 @@ export const UserApi = {
     editPassword: (data: UserApi_EditPassword) => post('/api/admin/edit_password', data),
 
     /**
-     * 获取管理员信息(当前登录用户)
+     * 获取管理员信息(当前登录用户信息)
      */
-    getAdmin: () => get<UserApi_GetAdminResponse>('/api/admin/get_admin_info'),
+    getAdmin: () => get<UserApi_GetAdminResponse>('/api/admin/info'),
 
     /**
      * 获取管理员权限菜单(当前登录用户)

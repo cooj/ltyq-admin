@@ -264,7 +264,7 @@ export function formatRoutes(routerArr: any[]) {
 export const filterHideRoutes = (routes: Array<string>) => {
     const arr: any = []
     routes.filter((item: any) => !item.meta.isHide)
-        .map((val: any) => {
+        .forEach((val: any) => {
             // 这里可以做一些操作
             // val['title'] = val.meta.title;
             // val['id'] = val.meta.id;
@@ -282,7 +282,7 @@ export const filterHideRoutes = (routes: Array<string>) => {
 export const filterMenu = (menuList: any[]) => {
     return menuList.filter((item: any) => {
         // return menuCode.indexOf(item.code) > -1
-        return item.component != ''
+        return item.component !== ''
     }).map((item: { children: any }) => {
         item = Object.assign({}, item)
         if (item.children) {

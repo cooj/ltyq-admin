@@ -40,20 +40,24 @@
         </MyTable>
         <MenuAdd ref="addMenuRef" :data="defData.menuData" />
         <MenuEdit ref="editMenuRef" :data="defData.menuData" />
+        <MenuModel ref="modelRef" />
     </my-box>
 </template>
 
 <script lang="ts" setup>
-import { ElMessage, ElMessageBox } from 'element-plus'
+// import { ElMessage, ElMessageBox } from 'element-plus'
 import MenuAdd from '@/views/system/menu/components/MenuAdd.vue'
 import MenuEdit from '@/views/system/menu/components/MenuEdit.vue'
+import MenuModel from '@/views/system/menu/components/MenuModel.vue'
 import { PAGINATION } from '@/config/global'
 
 import { MenuApi } from '@/api/system/menu'
+import { filterTreeList } from '@/utils/common/tree'
 
 const addMenuRef = ref<InstanceType<typeof MenuAdd> | null>(null)
 const editMenuRef = ref<InstanceType<typeof MenuEdit> | null>(null)
-const myTableRef = ref<InstanceType<typeof MyTable> | null>(null)
+const modelRef = ref<InstanceType<typeof MenuModel> | null>(null)
+const myTableRef = ref<MyTable>()
 
 const defData = reactive({
     loading: false,
@@ -84,11 +88,10 @@ const tableData = reactive<TableType<TableDataItem>>({
     tableHeader: [
         { property: 'id', label: 'id', width: 100 },
         { property: 'title', label: '菜单名称', minWidth: 150, slot: true },
-        { property: 'route_path', label: '路由路径', width: 150 },
-        { property: 'redirect', label: '重定向', width: 200 },
-        { property: 'page_path', label: '组件路径', width: 200 },
+        { property: 'url', label: '链接地址', width: 150 },
+        // { property: 'redirect', label: '重定向', width: 200 },
+        // { property: 'page_path', label: '组件路径', width: 200 },
         { property: 'sort', label: '排序', width: 80, align: 'center' },
-        { property: 'menu_type', label: '类型', width: 80, align: 'center', slot: true },
         { property: 'operate', label: '操作', width: 130, fixed: 'right', align: 'center', slot: true },
     ],
     pagination: {
@@ -98,24 +101,25 @@ const tableData = reactive<TableType<TableDataItem>>({
 
 // 初始化菜单数据
 const initTableData = async () => {
-    // const res = await MenuApi.getList()
-    // if (res.code !== 200) return ElMessage.error(res.msg)
+    const res = await MenuApi.getList()
+    console.log(res)
+    if (res.code !== 200) return ElMessage.error(res.msg)
 
-    // defData.menuData = res.data.menu_list
-    // if (searchData.data.name) {
-    //     // 属性数据模糊查询
-    //     tableData.data = filterTreeList(defData.menuData, searchData.data.name, 'title')
-    // } else {
-    //     tableData.data = res.data.menu_list
-    // }
+    defData.menuData = res.data.list
+    if (searchData.data.name) {
+        // 属性数据模糊查询
+        tableData.data = filterTreeList(defData.menuData, searchData.data.name, 'title')
+    } else {
+        tableData.data = res.data.list
+    }
 
-    // tableData.pagination.total = defData.menuData.length
-    // tableData.pagination.total=0
+    tableData.pagination.total = defData.menuData.length
 }
 
 // 添加class
 const setRowClassName = ({ row }: { row: MenuApi_MenuItem }) => {
-    return row.is_hide ? 'row-info-bg' : ''
+    return ''
+    // return row.is_hide ? 'row-info-bg' : ''
 }
 
 // 当前行点击
@@ -125,7 +129,8 @@ const rowClick = (row: MenuApi_MenuItem) => {
 
 // 打开新增菜单弹窗
 const onOpenAddMenu = (row: any = '') => {
-    addMenuRef.value?.openDialog(row)
+    modelRef.value?.openDialog(row)
+    // addMenuRef.value?.openDialog(row)
 }
 // 打开编辑菜单弹窗
 const onOpenEditMenu = (row: MenuApi_MenuItem) => {
@@ -133,7 +138,7 @@ const onOpenEditMenu = (row: MenuApi_MenuItem) => {
 }
 // 删除当前行
 const onRowDel = (row: MenuApi_MenuItem) => {
-    if (row.children?.length > 0) return ElMessage.error('当前项下有子类,请先删除该项下的子类目')
+    if (row.children?.length) return ElMessage.error('当前项下有子类,请先删除该项下的子类目')
 
     ElMessageBox.confirm('此操作将永久删除该条内容, 是否继续?', '提示', {
         confirmButtonText: '删除',

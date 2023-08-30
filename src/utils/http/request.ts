@@ -62,7 +62,7 @@ service.interceptors.response.use((response) => {
     // 对响应数据做点什么
     const res = response.data
     // return response.data;
-    if (res.code && res.code === 403) {
+    if (res.code && res.code === 1002) {
         if (import.meta.env.MODE === 'development') {
             if (errNum) return
             errNum++

@@ -11,7 +11,7 @@ import { post } from '@/utils/http/request'
 
 export const MenuApi = {
     // 获取菜单列表
-    getList: (data?: MenuApi_List) => post<MenuApi_ListResponse>('/api/menu/menu_list', data),
+    getList: (data?: MenuApi_List) => post<MenuApi_ListResponse>('/api/menu/get_list', data),
 
     // 添加菜单
     add: (data: MenuApi_Add) => post('/api/menu/add_menu', data),

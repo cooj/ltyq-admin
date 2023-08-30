@@ -11,31 +11,20 @@ declare interface MenuApi_List extends ListPage {
 /**
  * 菜单列表 - 响应数据
  */
-declare interface MenuApi_ListResponse {
-    "menu_list": MenuApi_MenuItem[]
+declare interface MenuApi_ListResponse extends ListTotal {
+    list: MenuApi_MenuItem[]
 }
 declare interface MenuApi_MenuItem {
-    "id": number,    // 菜单id           1
-    "pid": number,   // 上级id           0
-    "pid_arr": "",
-    "title": string,    // 菜单名称     订单管理
-    "level": number,     // 层级        1
-    "page_path": string,    // 视图路径   
-    "route_path": string,    // 路由路径        /order 
-    "route_name": string,      // 路由name      orderIndex
-    "redirect": string,     // 重定向       /order/list
-    "is_link": 0 | 1;        // 是否外链      示例值:0
-    "link_url": string,           // 外链地址      示例值:
-    "is_hide": 0 | 1;   // 是否隐藏      示例值:0
-    "is_affix": 0 | 1;      // 是否固定      示例值:0
-    "is_iframe": 0 | 1;     // 是否内嵌      示例值:0
-    "icon": string,        // 菜单图标      fa fa-file-text
-    "sort": number,        // 排序      1
-    "menu_type": number,      // 菜单类型       1
-    "created_at": number,      // 创建时间      1655950359
-    is_keep_alive: 0 | 1;     // 是否缓存 0不缓存  1缓存      示例值:0
-    api_path?: string;   // api接口地址
-    "children": MenuApi_MenuItem[]
+    "id": 1,
+    "p_id": 0,
+    "icon": string,
+    "url": "/",
+    "sort": 0,
+    "title": "首页",
+    "title_en": "Home",
+    "createdAt": "2023-08-30T09:25:44.210Z",
+    "updatedAt": "2023-08-30T09:25:40.000Z",
+    "children"?: MenuApi_MenuItem[],
 }
 
 /**

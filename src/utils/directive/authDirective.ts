@@ -21,8 +21,8 @@ export function authDirective(app: App) {
         mounted(el, binding) {
             let flag = false
             const stores = useUserState()
-            stores.userInfo.authBtnList.map((val: string) => {
-                binding.value.map((v: string) => {
+            stores.userInfo.authBtnList.forEach((val: string) => {
+                binding.value.forEach((v: string) => {
                     if (val === v) flag = true
                 })
             })

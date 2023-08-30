@@ -19,8 +19,8 @@ export function auth(value: string): boolean {
 export function auths(value: Array<string>): boolean {
     let flag = false
     const stores = useUserState()
-    stores.userInfo.authBtnList.map((val: string) => {
-        value.map((v: string) => {
+    stores.userInfo.authBtnList.forEach((val: string) => {
+        value.forEach((v: string) => {
             if (val === v) flag = true
         })
     })

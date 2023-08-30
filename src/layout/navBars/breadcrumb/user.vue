@@ -110,7 +110,7 @@ const state = reactive({
     isScreenFull: false,
     disabledI18n: 'zh-cn',
     disabledSize: 'large',
-    name: userState.userInfo.realname,
+    name: userState.userInfo.username,
 
 })
 // // 设置分割样式
