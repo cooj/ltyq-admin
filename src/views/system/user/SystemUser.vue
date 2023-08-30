@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { UserApi } from '@/api/system/user'
 import { PAGINATION } from '@/config/global'
-import UserModel from '@/views/system/user/components/UserModel.vue'
+import UserModel from '@/views/system/user/components/UserDrawer.vue'
 
 type TableDataType = UserApi_GetListResponse['list'][0]
 

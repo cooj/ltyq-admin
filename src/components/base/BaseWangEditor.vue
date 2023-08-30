@@ -1,9 +1,9 @@
 <template>
-    <div style="border: 1px solid #ccc; margin-top: 10px">
-        <Toolbar :editor="editorRef" :default-config="toolbarConfig" :mode="mode" style="border-bottom: 1px solid #ccc" />
+    <div class="wang-editor-box">
+        <Toolbar :editor="editorRef" :default-config="toolbarConfig" :mode="mode" class="wang-editor-tool" />
         <Editor v-model="valueHtml" :default-config="editorConfig" :mode="mode" style="height: 400px; overflow-y: hidden"
-            @onCreated="handleCreated" @onChange="handleChange" @onDestroyed="handleDestroyed" @onFocus="handleFocus"
-            @onBlur="handleBlur" @customAlert="customAlert" @customPaste="customPaste" />
+            @on-created="handleCreated" @on-change="handleChange" @on-destroyed="handleDestroyed" @on-focus="handleFocus"
+            @on-blur="handleBlur" @custom-alert="customAlert" @custom-paste="customPaste" />
     </div>
 </template>
 
@@ -11,22 +11,96 @@
 import '@wangeditor/editor/dist/css/style.css'
 import { onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import type { IEditorConfig } from '@wangeditor/editor'
+import { setSignRule } from '@/utils/http/crypto'
+import { Session } from '@/utils/storage'
+
+const props = defineProps({
+    modelValue: {
+        type: String,
+        default: '',
+    },
+})
+
+// 子传父,定义方法
+const emits = defineEmits(['update:modelValue'])
 
 // 编辑器实例，必须用 shallowRef，重要！
 const editorRef = shallowRef()
 
-// 内容 HTML
-const valueHtml = ref('<p>hello</p>')
-
-// 模拟 ajax 异步获取内容
-onMounted(() => {
-    setTimeout(() => {
-        valueHtml.value = '<p>模拟 Ajax 异步设置内容</p>'
-    }, 1500)
+const valueHtml = computed({
+    get() {
+        return props.modelValue
+    },
+    set(value) {
+        emits('update:modelValue', value)
+    },
 })
 
+// 内容 HTML
+// const valueHtml = ref('<p>hello</p>')
+
+// 模拟 ajax 异步获取内容
+// onMounted(() => {
+//     setTimeout(() => {
+//         valueHtml.value = '<p>模拟 Ajax 异步设置内容</p>'
+//     }, 1500)
+// })
+
 const toolbarConfig = {}
-const editorConfig = { placeholder: '请输入内容...' }
+const editorConfig: Partial<IEditorConfig> = {
+    placeholder: '请输入内容...',
+
+    MENU_CONF: {},
+
+}
+
+const setTokenSign = () => {
+    const token = Session.get('token')
+
+    // 'x-sign': `${sign}-${time}`,
+    const timestamp = Date.now()
+    const sign = setSignRule(import.meta.env.VITE_SIGN_KEY, `${timestamp}`)
+    return {
+        'x-sign': `${sign}-${timestamp}`,
+        'x-token': `${token}`,
+
+    }
+}
+
+type InsertImageFnType = (url: string, alt: string, href: string) => void
+type InsertVideoFnType = (url: string, poster: string) => void
+// 配置上传图片
+editorConfig.MENU_CONF!.uploadImage = {
+    fieldName: 'file',
+    server: '/api/common/upload',
+    headers: setTokenSign(),
+    // 自定义插入图片
+    customInsert(res: any, insertFn: InsertImageFnType) { // TS 语法
+        console.log(res)
+        // customInsert(res, insertFn) {                  // JS 语法
+        // res 即服务端的返回结果
+
+        // 从 res 中找到 url alt href ，然后插入图片
+        insertFn(res.data, res.data, res.data)
+    },
+}
+
+// 配置上传视频
+editorConfig.MENU_CONF!.uploadVideo = {
+    fieldName: 'file',
+    server: '/api/common/upload',
+    headers: setTokenSign(),
+    // 自定义插入图片
+    customInsert(res: any, insertFn: InsertVideoFnType) { // TS 语法
+        console.log(res)
+        // customInsert(res, insertFn) {                  // JS 语法
+        // res 即服务端的返回结果
+
+        // 从 res 中找到 url alt href ，然后插入图片
+        insertFn(res.data, res.data)
+    },
+}
 
 const mode = ref('default')
 
@@ -88,3 +162,17 @@ const disable = () => {
     editor.disable()
 }
 </script>
+
+<style lang="scss" scoped>
+.wang-editor-box {
+    border: 1px solid #ddd;
+
+    .wang-editor-tool {
+        border-bottom: 1px solid #ddd;
+    }
+
+    &.w-e-full-screen-container {
+        z-index: 10;
+    }
+}
+</style>
