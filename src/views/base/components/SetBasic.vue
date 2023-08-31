@@ -105,20 +105,12 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onBeforeMount, reactive, ref, watch } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage } from 'element-plus'
-import { SystemCompanyApi } from '@/api/system/company'
+import { setSystemInfo } from '@/api/system'
 
 const props = defineProps<{
     data?: SystemCompanyApi_GetInfoResponse
 }>()
-
-const initData = inject<() => void>('initData')
-
-const defData = reactive({
-    lang: 'cn',
-})
 
 const lang = ref<LanguageType>('cn')
 
@@ -196,7 +188,7 @@ const onSubmit = async () => {
         copyright_en: form.data.copyright_en?.trim() ?? '',
     }
 
-    const res = await SystemCompanyApi.editSystem(param)
+    const res = await setSystemInfo(param)
     if (res.code !== 200) return ElMessage.error(res.msg)
     // const res = await ShopBaseApi.getBasicInf(data)
     // if (res.code != 200) return ElMessage.error(res.msg)

@@ -56,7 +56,7 @@ import { ElInput, ElMessage } from 'element-plus'
 import { Session } from '@/utils/storage'
 import { formatAxis } from '@/utils/common/formatTime'
 import { NextLoading } from '@/utils/loading'
-import { LoginApi } from '@/api/login'
+import { setLoginSign } from '@/api/login'
 
 const route = useRoute()
 const router = useRouter()
@@ -110,7 +110,7 @@ const onSignIn = async () => {
     if (!isRun) return
 
     state.loading.signIn = true
-    const res = await LoginApi.sign({
+    const res = await setLoginSign({
         account: ruleForm.userName,
         password: ruleForm.password,
     })

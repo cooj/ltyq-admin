@@ -8,9 +8,14 @@
                         <SetBasic :data="companyInfo" />
                     </el-scrollbar>
                 </el-tab-pane>
-                <el-tab-pane label="公司介绍" name="2" lazy>
+                <el-tab-pane label="关于我们" name="2" lazy>
                     <el-scrollbar>
-                        <!-- <SetBasic :data="defData.data" /> -->
+                        <SetAbout />
+                    </el-scrollbar>
+                </el-tab-pane>
+                <el-tab-pane label="联系我们" name="3" lazy>
+                    <el-scrollbar>
+                        <SetContact />
                     </el-scrollbar>
                 </el-tab-pane>
             </el-tabs>
@@ -22,7 +27,9 @@
 import type { TabsPaneContext } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import SetBasic from '@/views/base/components/SetBasic.vue'
-import { SystemCompanyApi } from '@/api/system/company'
+import SetAbout from '@/views/base/components/SetAbout.vue'
+import SetContact from '@/views/base/components/SetContact.vue'
+import { getSystemInfo } from '@/api/system'
 
 const activeName = ref('1')
 
@@ -35,7 +42,7 @@ const companyInfo = ref<SystemCompanyApi_GetInfoResponse>()
 
 // 初始化数据
 const initDefaultData = async () => {
-    const res = await SystemCompanyApi.getSystem()
+    const res = await getSystemInfo()
     if (res.code !== 200) return ElMessage.error(res.msg)
 
     companyInfo.value = res.data

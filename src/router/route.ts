@@ -25,7 +25,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 component: () => import('@/views/home/HomeIndex.vue'),
                 meta: {
                     id: 1,
-                    title: '首页',
+                    title: '首页装修',
                     isLink: false, // 是否使用外链
                     linkUrl: '', // 外链
                     isHide: false, // 是否隐藏
@@ -34,6 +34,40 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                     isIframe: false,
                     roles: ['admin', 'common'],
                     icon: 'iconfont icon-home',
+                },
+            },
+            {
+                path: '/goods',
+                name: 'GoodsList',
+                component: () => import('@/views/goods/GoodsList.vue'),
+                meta: {
+                    id: 2023032402,
+                    title: '产品列表',
+                    isLink: false,
+                    linkUrl: '',
+                    isHide: false,
+                    isKeepAlive: true,
+                    isAffix: false,
+                    isIframe: false,
+                    roles: ['admin', 'common'],
+                    icon: 'ele-Menu',
+                },
+            },
+            {
+                path: '/news',
+                name: 'NewsList',
+                component: () => import('@/views/news/NewsList.vue'),
+                meta: {
+                    id: 2023032402,
+                    title: '新闻资讯',
+                    isLink: false,
+                    linkUrl: '',
+                    isHide: false,
+                    isKeepAlive: true,
+                    isAffix: false,
+                    isIframe: false,
+                    roles: ['admin', 'common'],
+                    icon: 'ele-Menu',
                 },
             },
             {

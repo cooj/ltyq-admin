@@ -41,7 +41,7 @@ export function getParentNode<T = any>(classifyList: Array<T>, val: T[keyof T], 
         for (let i = 0; i < arr.length; i++) {
             const item = arr[i]
             // 找到值对应的那一项，追加进去
-            if (item[key] == val) temp.push(item)
+            if (item[key] === val) temp.push(item)
             if (item[children]) {
                 const data1 = item[children].find((item1: any) => {
                     return item1[key] === id
@@ -75,7 +75,7 @@ export function getSiblingsNode<T = any>(classifyList: Array<T>, val: T[keyof T]
             const item = arr[i]
             // 找到值对应的那一项，追加进去
             if (temp.length) break
-            if (item[key] == val) {
+            if (item[key] === val) {
                 temp = arr
                 break
             }
@@ -103,14 +103,14 @@ export function transformTreeArr<T = any>(sNodes: T[], child = 'children' as key
     for (let i = 0; i < sNodes.length; i++) {
         // 判断原先数组有没有这个字段
         if (sNodes[i][child]) {
-            throw `数组中存在${String(child)}字段，换一个参数`
+            throw `数组中存在${String(child)}字段，换一个参数` // eslint-disable-line no-throw-literal
         }
         tmpMap[sNodes[i][id]] = sNodes[i]
     }
     for (let i = 0; i < sNodes.length; i++) {
         const p = tmpMap[sNodes[i][pid]] // 得到会在子类的项
 
-        if (p && sNodes[i][id] != sNodes[i][pid]) {
+        if (p && sNodes[i][id] !== sNodes[i][pid]) {
             // 判断是否有child数组,没有就给个空数组（也就是刚开始的时候）
             p[child] = p[child] ? p[child] : []
             p[child].push(sNodes[i]) // 追加到当前项
@@ -159,7 +159,7 @@ export function findNodeItem<T = any>(data: Array<T>, val: T[keyof T], key = 'id
             if (temp) break // 已经拿到值了,就退出循环
             const item = arr[i]
             // 找到值对应的那一项，赋值
-            if (item[key] == val) temp = item
+            if (item[key] === val) temp = item
 
             if (item[children]) forFn(item[children], id)
         }
@@ -206,9 +206,9 @@ export function getParentRouterId<T = any>(classifyList: T[], val: T[keyof T], k
  * @param disable 设置禁用的字段，默认使用的是a_disable
  * @returns
  */
-export function setDisableTree<T = any>(data: T[], val: number | string, key = 'id' as keyof T, children = 'children' as keyof T, disable = 'a_disable'): (T & { disable?: boolean })[] {
+export function setDisableTree<T = any>(data: T[], val: number | string, key = 'id' as keyof T, children = 'children' as keyof T, disable = 'disabled'): (T & { disabled?: boolean })[] {
     const result = data.map((item: any) => {
-        if (item[key] == val || val == '_s_') {
+        if (item[key] === val || val === '_s_') {
             item[disable] = true
             if (item[children] && item[children].length > 0) {
                 // 如果有子集，则把子集作为参数重新执行本方法
@@ -240,7 +240,7 @@ export function setLastItemDisable<T = any>(data: T[], val: number | string, key
             // 如果有子集，则把子集作为参数重新执行本方法
             item[children] = setLastItemDisable(item[children], val, key, children, disable)
         } else {
-            if (item[key] == val) {
+            if (item[key] === val) {
                 item[disable] = true
             }
         }

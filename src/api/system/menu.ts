@@ -14,23 +14,20 @@ export const MenuApi = {
     getList: (data?: MenuApi_List) => post<MenuApi_ListResponse>('/api/menu/get_list', data),
 
     // 添加菜单
-    add: (data: MenuApi_Add) => post('/api/menu/add_menu', data),
+    add: (data: MenuApi_Add) => post('/api/menu/add', data),
 
     /**
      * 修改菜单
      * @param data
      * @returns
      */
-    edit: (data: MenuApi_Edit) => post('/api/menu/edit_menu_submit', data),
+    edit: (data: MenuApi_Edit) => post('/api/menu/edit', data),
 
     /**
      * 删除菜单
      * @param data menu_id
      * @returns
      */
-    del: (data: { menu_id: number }) => post('/api/menu/delete_menu', data),
-
-    // 取得权限菜单
-    getAdminMenu: () => post<MenuApi_ListAdminResponse>('/api/admin/get_menu'),
+    del: (data: { id: number }) => post('/api/menu/delete', data),
 
 }

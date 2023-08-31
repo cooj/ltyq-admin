@@ -18,7 +18,7 @@ declare interface MenuApi_MenuItem {
     "id": 1,
     "p_id": 0,
     "icon": string,
-    "url": "/",
+    "href": "/",
     "sort": 0,
     "title": "首页",
     "title_en": "Home",
@@ -31,21 +31,13 @@ declare interface MenuApi_MenuItem {
  * 新增（修改）菜单 - 请求参数
  */
 declare interface MenuApi_Add {
-    menuType: number;     // 菜单类型 1菜单， 2按钮      示例值:1
-    menuPid: string;     // 上级ID      示例值:3
-    component: string;     // 视图路径      示例值:/test/index
-    sort: number;     // 菜单排序 （倒序）      示例值:1
-    path: string;     // 路由路径      示例值:/test/index2
-    redirect: string;     // 路由重定向，一级菜单默认定位页面      示例值:/test/index
-    title: string;     // 菜单名称      示例值:测试菜单2
-    icon: string;     // 菜单图标      示例值:fa fa-file-text
-    isHide: 0 | 1;     // 是否隐藏      示例值:0
-    isAffix: 0 | 1;     // 是否固定      示例值:0
-    isLink: 0 | 1;     // 是否外链      示例值:0
-    linkUrl: string;     // 外链地址      示例值:
-    isIframe: 0 | 1;     // 是否内嵌      示例值:0
-    isKeepAlive: 0 | 1;     // 是否缓存 0不缓存  1缓存      示例值:0
-    api_path: string;         // 接口地址       示例值:/test/index3 - 必须保持一致！！！ （可选
+    "p_id": number,
+    "href": string,
+    "sort": number,
+    "title": string,
+    "title_en": string,
+    
+    "icon"?: string,
 }
 
 /**
