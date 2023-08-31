@@ -1,5 +1,6 @@
+<!-- 公司风采 -->
 <template>
-    <NewsList :type="1" title="新闻" />
+    <NewsList :type="3" title="风采" />
 </template>
 
 <script lang="ts" setup>

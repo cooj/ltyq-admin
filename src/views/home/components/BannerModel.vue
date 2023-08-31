@@ -18,11 +18,11 @@
                 <el-input v-model="form.data.href" maxlength="200" placeholder="" clearable />
             </el-form-item>
 
-            <el-form-item label="排序">
+            <el-form-item label="排序" prop="sort">
                 <el-input-number v-model="form.data.sort" :min="0" :max="10000" controls-position="right" placeholder=""
                     class="w100%" />
             </el-form-item>
-            <el-form-item label="是否隐藏">
+            <el-form-item label="是否隐藏" prop="isHide">
                 <el-radio-group v-model="form.data.isHide">
                     <el-radio :label="true">
                         是

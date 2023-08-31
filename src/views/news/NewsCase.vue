@@ -1,10 +1,10 @@
 <!-- 客户案例 -->
 <template>
-    <NewsList :type="4" title="产品" />
+    <NewsList :type="2" title="案例" />
 </template>
 
 <script lang="ts" setup>
-import NewsList from '@/views/news/components/NewsList.vue'
+import NewsList from './components/NewsList.vue'
 </script>
 
 <style lang="scss" scoped></style>

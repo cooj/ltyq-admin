@@ -185,14 +185,5 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-.comp-box {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
 
-    em {
-        color: var(--el-text-color-secondary);
-        font-size: 13px;
-    }
-}
 </style>

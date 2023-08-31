@@ -69,7 +69,7 @@ declare interface IOtherInfoResponse {
 
 
 /**
- * 修改关于我们、联系我们 - 响应数据
+ * 修改关于我们、联系我们 - 请求参数
  */
 declare interface IOtherInfoUpdate {
 
@@ -85,5 +85,66 @@ declare interface IOtherInfoUpdate {
 
 
 }
+
+
+
+/**
+ * 新闻列表 - 请求参数
+ */
+declare interface INewsGetList extends ListPage {
+    type: number;    // 类型
+    title?: string;  // 标题
+}
+
+/**
+ * 新闻列表 - 响应数据
+ */
+declare interface INewsGetListResponse extends ListTotal {
+    list: {
+        "id": 1,
+        "title": "清洁度检测标准ISO16232和VDA",
+        "title_en": "",
+        "author": "tong",
+        "describe": "检测目的：通过标准的方法来验证产品的清洁度品在装配时的紧密度,并且使产品的磨损老化加速。通过清洁度检测并规定其限值，可大大减轻颗粒磨损造......",
+        "describe_en": "",
+        "content": string
+        "content_en": string
+        "img": "http://localhost:9008/upload/2023/8/31/1693465126951cbycq5.png",
+        "sort": 0,
+        "isHide": boolean,
+        "type": 1,
+        "createdAt": "2023-08-31T06:59:35.000Z",
+        "updatedAt": "2023-08-31T06:59:35.000Z"
+    }[]
+}
+
+/**
+ * 新闻列表 - 添加
+ */
+declare interface INewsAdd {
+
+    title: string,  // 标题
+    title_en?: string,  // 标题
+    img: string; // 图片地址
+    author: string;  // 作者
+    describe: string; //简介
+    describe_en: string; //简介
+
+    content: string; // 内容
+    content_en: string; // 内容
+
+    isHide: boolean; //是否首页显示
+    sort: number;    // 排序
+
+    type: number;    // 类型 1:新闻
+}
+
+/**
+ * 新闻列表 - 修改
+ */
+declare interface INewsEdit extends INewsAdd {
+    id: number
+}
+
 
 

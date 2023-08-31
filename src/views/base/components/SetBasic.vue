@@ -92,7 +92,7 @@
             </el-col>
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb18px">
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">
+                    <el-button type="primary" :loading="btnLoading" @click="onSubmit">
                         确定
                     </el-button>
                     <el-button @click="resetForm">
@@ -107,6 +107,7 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
 import { setSystemInfo } from '@/api/system'
+import { useLoadingSubmit } from '@/hooks/useLoadingSubmit'
 
 const props = defineProps<{
     data?: SystemCompanyApi_GetInfoResponse
@@ -168,6 +169,7 @@ const initDefaultData = async () => {
     form.data.copyright_en = propsData.copyright_en || ''
 }
 
+const [ApiFunc, btnLoading] = useLoadingSubmit()
 // 确定
 const onSubmit = async () => {
     const param: ISystemEditParams = {
@@ -188,7 +190,7 @@ const onSubmit = async () => {
         copyright_en: form.data.copyright_en?.trim() ?? '',
     }
 
-    const res = await setSystemInfo(param)
+    const res = await ApiFunc(setSystemInfo(param))
     if (res.code !== 200) return ElMessage.error(res.msg)
     // const res = await ShopBaseApi.getBasicInf(data)
     // if (res.code != 200) return ElMessage.error(res.msg)

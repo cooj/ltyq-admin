@@ -18,7 +18,7 @@
 
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb18px">
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">
+                    <el-button type="primary" :loading="btnLoading" @click="onSubmit">
                         确定
                     </el-button>
                     <el-button @click="resetForm">
@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
 import { getOtherInfo, setOtherInfoUpdate } from '@/api/list'
+import { useLoadingSubmit } from '@/hooks/useLoadingSubmit'
 
 const props = defineProps<{
     data?: SystemCompanyApi_GetInfoResponse
@@ -79,6 +80,7 @@ const initDefaultData = async () => {
     defData.ready = true
 }
 
+const [ApiFunc, btnLoading] = useLoadingSubmit()
 // 确定
 const onSubmit = async () => {
     const param: IOtherInfoUpdate = {
@@ -91,7 +93,7 @@ const onSubmit = async () => {
         type: form.data.type,
     }
 
-    const res = await setOtherInfoUpdate(param)
+    const res = await ApiFunc(setOtherInfoUpdate(param))
     if (res.code !== 200) return ElMessage.error(res.msg)
     // const res = await ShopBaseApi.getBasicInf(data)
     // if (res.code != 200) return ElMessage.error(res.msg)

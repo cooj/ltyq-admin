@@ -23,3 +23,13 @@ export const setGoodsDelete = (data: { id: number }) => post('/api/goods/delete'
 export const getOtherInfo = (data: { type: number }) => post<IOtherInfoResponse | null>('/api/other/info', data)
 // 更新关于我们、联系我们信息
 export const setOtherInfoUpdate = (data: IOtherInfoUpdate) => post('/api/other/edit', data)
+
+// 、、、   ///
+// 获取新闻列表
+export const getNewsList = (data?: INewsGetList) => post<INewsGetListResponse>('/api/news/get_list', data)
+// 添加新闻
+export const setNewsAdd = (data: INewsAdd) => post('/api/news/add', data)
+// 修改新闻
+export const setNewsUpdate = (data: INewsEdit) => post('/api/news/edit', data)
+// 删除新闻
+export const setNewsDelete = (data: { id: number }) => post('/api/news/delete', data)
