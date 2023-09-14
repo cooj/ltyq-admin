@@ -15,7 +15,7 @@ declare interface MenuApi_ListResponse extends ListTotal {
     list: MenuApi_MenuItem[]
 }
 declare interface MenuApi_MenuItem {
-    "id": 1,
+    "id": number,
     "p_id": 0,
     "icon": string,
     "href": "/",

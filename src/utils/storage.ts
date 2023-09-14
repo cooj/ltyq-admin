@@ -37,12 +37,12 @@ export const Local = {
 export const Session = {
     // 设置临时缓存
     set(key: string, val: any) {
-        if (key === 'token') return Cookies.set(key, val)
+        // if (key === 'token') return Cookies.set(key, val)
         window.sessionStorage.setItem(key, JSON.stringify(val))
     },
     // 获取临时缓存
     get<T = any>(key: string): T {
-        if (key === 'token') return Cookies.get(key) as any
+        // if (key === 'token') return Cookies.get(key) as any
         const json: any = window.sessionStorage.getItem(key)
         let data: any = ''
         try {
@@ -54,12 +54,12 @@ export const Session = {
     },
     // 移除临时缓存
     remove(key: string) {
-        if (key === 'token') return Cookies.remove(key)
+        // if (key === 'token') return Cookies.remove(key)
         window.sessionStorage.removeItem(key)
     },
     // 移除全部临时缓存
     clear() {
-        Cookies.remove('token')
+        // Cookies.remove('token')
         window.sessionStorage.clear()
     },
 }

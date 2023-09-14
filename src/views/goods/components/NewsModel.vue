@@ -17,6 +17,11 @@
             <!-- <el-form-item label="发布者" prop="author">
                 <el-input v-model="form.data.author" maxlength="30" placeholder="请输入名称" clearable />
             </el-form-item> -->
+            <el-form-item label="商品分类" prop="type">
+                <el-select v-model="form.data.type" clearable filterable>
+                    <el-option v-for="item in props.list" :key="item.id" :label="item.title" :value="item.id" />
+                </el-select>
+            </el-form-item>
             <el-form-item :label="`${props.title}图片`" prop="img">
                 <UploadFile v-model="form.data.img" />
             </el-form-item>
@@ -27,7 +32,7 @@
                         clearable />
                 </el-form-item>
                 <el-form-item label="详细内容" prop="content">
-                    <BaseWangEditor v-model="form.data.content" />
+                    <BaseWangEditor v-if="defData.editShow" v-model="form.data.content" />
                 </el-form-item>
             </template>
             <template v-else-if="lang === 'en'">
@@ -36,19 +41,20 @@
                         clearable />
                 </el-form-item>
                 <el-form-item label="英文详细内容" prop="content_en">
-                    <BaseWangEditor v-model="form.data.content_en" />
+                    <BaseWangEditor v-if="defData.editShow" v-model="form.data.content_en" />
                 </el-form-item>
             </template>
             <el-form-item label="阅读量" prop="read">
                 <el-input-number v-model="form.data.read" :precision="0" :min="0" :max="10 ** 14"
                     controls-position="right" />
             </el-form-item>
+
             <el-form-item label="首页推荐" prop="isHide">
                 <el-radio-group v-model="form.data.isHide">
-                    <el-radio :label="true">
+                    <el-radio :label="false">
                         是
                     </el-radio>
-                    <el-radio :label="false">
+                    <el-radio :label="true">
                         否
                     </el-radio>
                 </el-radio-group>
@@ -66,11 +72,12 @@ import type { FormInstance, FormRules } from 'element-plus'
 
 import { verifyFormData } from '@/utils/element/form'
 import { useLoadingSubmit } from '@/hooks/useLoadingSubmit'
-import { setNewsAdd, setNewsUpdate } from '@/api/list'
+import { setGoodsAdd, setGoodsUpdate } from '@/api/list'
 
 const props = defineProps<{
-    type: number
+    // type: number
     title: string
+    list: MenuApi_MenuItem[]
 }>()
 
 const emits = defineEmits<{
@@ -80,10 +87,11 @@ const emits = defineEmits<{
 const lang = ref<LanguageType>('cn')
 const defData = reactive({
     visible: false, // 弹窗显示
-    menuData: [], // 上级菜单数据
+    menuData: [] as MenuApi_MenuItem[],
     ready: false,
     routeArr: [] as MenuApi_MenuItem[],
     type: 1,
+    editShow: false, // 是否是编辑器
 })
 const formRef = ref<FormInstance>()
 
@@ -103,6 +111,8 @@ const form = reactive({
 
         sort: 0, // 排序
         read: 0, // 阅读量
+        type: '' as '' | number, // 分类id
+
     },
 })
 
@@ -124,11 +134,18 @@ const comData = computed(() => {
 const initDefaultData = async () => {
     if (defData.ready) return
 
+    // const res = await MenuApi.getList()
+    // if (res.code !== 200) return ElMessage.error(res.msg)
+
+    // const list = res.data.list.filter(item => item.id === 3)
+
+    // defData.menuData = list[0]?.children || []
+
     defData.ready = true
 }
 
 // 打开弹窗
-const openDialog = async (row?: INewsGetListResponse['list'][0]) => {
+const openDialog = async (row?: IGoodsGetListResponse['list'][0]) => {
     if (row) { // 修改
         defData.type = 2
 
@@ -146,6 +163,9 @@ const openDialog = async (row?: INewsGetListResponse['list'][0]) => {
 
         form.data.isHide = row.isHide
         form.data.sort = row.sort
+
+        form.data.type = row.type || ''
+        form.data.read = row.read || 0
     } else {
         defData.type = 1
         form.data.id = 0
@@ -162,9 +182,13 @@ const openDialog = async (row?: INewsGetListResponse['list'][0]) => {
 
         form.data.isHide = false
         form.data.sort = 0
+
+        form.data.type = ''
+        form.data.read = 0
     }
 
     await initDefaultData()
+    defData.editShow = true
     defData.visible = true
 }
 
@@ -174,8 +198,9 @@ const onReset = () => {
 
 // 关闭弹窗
 const onClose = () => {
-    defData.visible = false
     onReset()
+    defData.editShow = false
+    defData.visible = false
 }
 
 const [ApiFunc, btnLoading] = useLoadingSubmit()
@@ -195,12 +220,12 @@ const onConfirm = useThrottleFn(async () => {
         content: form.data.content?.trim() ?? '',
         content_en: form.data.content_en?.trim() ?? '',
         isHide: form.data.isHide,
-        type: props.type,
+        type: Number(form.data.type),
         read: form.data.read || 0,
     }
 
     if (defData.type === 1) {
-        const res = await ApiFunc(setNewsAdd(data))
+        const res = await ApiFunc(setGoodsAdd(data))
         if (res.code !== 200) return ElMessage.error(res.msg)
         ElMessage.success('添加成功')
     } else {
@@ -209,7 +234,7 @@ const onConfirm = useThrottleFn(async () => {
             id: form.data.id,
         }
 
-        const res = await ApiFunc(setNewsUpdate(param))
+        const res = await ApiFunc(setGoodsUpdate(param))
         if (res.code !== 200) return ElMessage.error(res.msg)
         ElMessage.success('修改成功')
     }

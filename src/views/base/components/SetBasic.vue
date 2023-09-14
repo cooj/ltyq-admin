@@ -86,6 +86,12 @@
                 </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16" class="mb18px">
+                <el-form-item prop="icon" label="网站图标：">
+                    <UploadFile v-model="form.data.icon" />
+                </el-form-item>
+            </el-col>
+
+            <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16" class="mb18px">
                 <el-form-item prop="qr_code" label="二维码：">
                     <UploadFile v-model="form.data.qr_code" />
                 </el-form-item>
@@ -138,6 +144,8 @@ const form = reactive({
         copyright: '', // 版权信息
         filing_en: '', // 备案号
         copyright_en: '', // 版权信息
+
+        icon: '', // 网站图标
     },
 
 })
@@ -167,6 +175,8 @@ const initDefaultData = async () => {
     form.data.copyright = propsData.copyright || ''
     form.data.filing_en = propsData.filing_en || ''
     form.data.copyright_en = propsData.copyright_en || ''
+
+    form.data.icon = propsData.icon || ''
 }
 
 const [ApiFunc, btnLoading] = useLoadingSubmit()
@@ -188,6 +198,7 @@ const onSubmit = async () => {
         copyright: form.data.copyright?.trim() ?? '',
         filing_en: form.data.filing_en?.trim() ?? '',
         copyright_en: form.data.copyright_en?.trim() ?? '',
+        icon: form.data.icon?.trim() ?? '',
     }
 
     const res = await ApiFunc(setSystemInfo(param))

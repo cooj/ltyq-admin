@@ -20,7 +20,8 @@ declare interface SystemCompanyApi_GetInfoResponse {
     "title_en": "Shengyin Intelligent Technology (Shenzhen) Co., LTD",
     "address_en": "18F, Building A, Yunzhi Technology Park, South of Shuangming Avenue, Dongzhou Community, Guangming Street, Guangming District, Shenzhen, Guangdong   ",
     "filing_en": null,
-    "copyright_en": null
+    "copyright_en": null,
+    icon:string
 }
 
 
@@ -49,6 +50,7 @@ declare interface ISystemEditParams{
     copyright: string, // 版权信息
     filing_en: string, // 备案号
     copyright_en: string, // 版权信息
+    icon:string, // 网站图标
 }
 
 
