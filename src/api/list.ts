@@ -11,13 +11,13 @@ export const setBannerDelete = (data: { id: number }) => post('/api/banner/delet
 
 // 、、、   ///
 // 获取商品列表
-export const getGoodsList = (data?: IBannerGetList) => post<IBannerGetListResponse>('/api/goods/get_list', data)
+export const getGoodsList = (data?: IGoodsGetList) => post<IGoodsGetListResponse>('/api/product/get_list', data)
 // 添加商品
-export const setGoodsAdd = (data: IBannerAdd) => post('/api/goods/add', data)
+export const setGoodsAdd = (data: INewsAdd) => post('/api/product/add', data)
 // 修改商品
-export const setGoodsUpdate = (data: IBannerEdit) => post('/api/goods/edit', data)
+export const setGoodsUpdate = (data: INewsEdit) => post('/api/product/edit', data)
 // 删除商品
-export const setGoodsDelete = (data: { id: number }) => post('/api/goods/delete', data)
+export const setGoodsDelete = (data: { id: number }) => post('/api/product/delete', data)
 
 // 获取关于我们、联系我们信息
 export const getOtherInfo = (data: { type: number }) => post<IOtherInfoResponse | null>('/api/other/info', data)

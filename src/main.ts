@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import Particles from 'vue3-particles'
 import App from './App.vue'
 
 import router from './router'
@@ -27,5 +28,6 @@ setComponents(app) // 注册全局组件
 app.use(pinia)
 app.use(router)
 // app.use(ElementPlus)
+app.use(Particles)
 
 app.mount('#app')

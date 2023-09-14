@@ -40,7 +40,7 @@
             </el-col>
         </el-form-item> -->
         <el-form-item class="login-animation4">
-            <el-button type="success" class="login-content-submit" round plain :loading="state.loading.signIn" tabindex="4"
+            <el-button type="primary" size="large" class="login-content-submit" round plain :loading="state.loading.signIn" tabindex="4"
                 @click="onSignIn">
                 登 录
             </el-button>
