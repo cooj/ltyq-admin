@@ -8,7 +8,7 @@ let errNum = 0
 // 配置新建一个 axios 实例
 const service = axios.create({
     // baseURL: import.meta.env.MODE === 'development' ? '' : (import.meta.env.VITE_API_URL || ''),
-    baseURL: 'http://127.0.0.1:9008/',
+    baseURL: import.meta.env.VITE_NO_PROXY_API_URL,
     timeout: import.meta.env.MODE === 'development' ? 20000 : 30000,
     headers: { 'Content-Type': 'application/json' },
     // 请求超时再次发起请求处理,设置全局的请求次数，请求的间隙

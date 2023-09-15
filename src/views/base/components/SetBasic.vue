@@ -81,7 +81,7 @@
                 </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="24" :md="20" :lg="18" :xl="16" class="mb18px">
-                <el-form-item prop="logo2" label="小logo：">
+                <el-form-item prop="logo2" label="网站logo2：">
                     <UploadFile v-model="form.data.logo2" />
                 </el-form-item>
             </el-col>
