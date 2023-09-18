@@ -1,18 +1,4 @@
 /**
- * 客户、供应商去除资金来往大类别
- * @param row 数组对象
- * @param text 需要返回文字的字段
- * @returns
- */
-export function filterCustomVendor<T extends object, K extends keyof T>(row: T[], text: 'custom' | 'vendor'): T[] {
-    const id = 'id' as K
-    let aid = 201
-    if (text == 'custom') aid = 301
-    const arr = row.filter(item => item[id] !== aid)
-    return arr
-}
-
-/**
  * 设置商品名称
  * @param item goods_name:商品名，goods_code:商品型号，goods_spec:商品规格，title：标题,goods_brand:品牌
  * @returns
@@ -81,10 +67,12 @@ export function changeCompanyGroupId(val: number | string, clear = true, str = '
  * @param {string} url  跳转的地址或页面名称
  * @returns
  */
-export const setHomeUrl = (url: string) => {
+export const setHomeUrl = (url?: string) => {
     let host = import.meta.env.VITE_HOME_URL
+    if (!url) return host
     // 以/开头的URL处理，以/结尾的URL不做处理。
-    const startReg = /^\//; const endReg = /\/$/
+    const startReg = /^\//
+    const endReg = /\/$/
 
     host = endReg.test(host) ? host : `${host}/`
 

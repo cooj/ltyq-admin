@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { UserApi } from '@/api/system/user'
+import { Session } from '@/utils/storage'
 
 type MenuDataItem = UserApi_GetMenuItem
 
@@ -13,8 +14,8 @@ type UserInfoData = UserAdminInfo
 export const useUserState = defineStore('useUser', {
     state: () => ({
         userInfo: {} as UserInfoData, // 用户信息
-        // state: Session.get('adm') === 'adm',
-        state: true,
+        state: Session.get('adm') === 'adm',
+        // state: true,
         menuList: [] as MenuDataItem[], // 权限菜单
         company_group_id: '' as '' | number, // 当前的公司分组id
     }),

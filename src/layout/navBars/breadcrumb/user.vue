@@ -33,7 +33,11 @@
                 <UserNews />
             </div>
         </template>
-
+        <div class="layout-navbars-breadcrumb-user-icon">
+            <a :href="setHomeUrl()" target="_blank">
+                <i class="iconfont icon-home" title="首页" />
+            </a>
+        </div>
         <div class="layout-navbars-breadcrumb-user-icon mr10px" @click="onScreenFullClick">
             <i class="iconfont" :title="state.isScreenFull ? '关全屏' : '开全屏'"
                 :class="!state.isScreenFull ? 'icon-fullscreen' : 'icon-exit-fullscreen'" />
@@ -91,6 +95,7 @@ import Search from '@/layout/navBars/breadcrumb/search.vue'
 // import Settings from '@/layout/navBars/breadcrumb/settings.vue';
 import EditPwd from '@/layout/navBars/breadcrumb/editPwd.vue'
 import { CommonApi } from '@/api/common'
+import { setHomeUrl } from '@/utils/other/changeData'
 
 const userState = useUserState()
 
