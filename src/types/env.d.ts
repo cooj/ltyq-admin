@@ -26,8 +26,4 @@ interface ImportMetaEnv {
 
     VITE_REQUEST_ROUTE: string,
 
-    /**
-     * 跨库出库倍率
-     */
-    VITE_OUT_RATE: string,
 }
