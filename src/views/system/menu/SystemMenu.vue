@@ -36,7 +36,7 @@ import { MenuApi } from '@/api/system/menu'
 import { filterTreeList } from '@/utils/common/tree'
 
 const modelRef = ref<InstanceType<typeof MenuModel> | null>(null)
-const myTableRef = ref<MyTable>()
+const myTableRef = ref()
 
 const defData = reactive({
     loading: false,

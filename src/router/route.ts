@@ -105,6 +105,23 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
                 },
             },
             {
+                path: '/technical',
+                name: 'NewsTechnical',
+                component: () => import('@/views/news/NewsTechnical.vue'),
+                meta: {
+                    id: 2023032402,
+                    title: '技术支持',
+                    isLink: false,
+                    linkUrl: '',
+                    isHide: false,
+                    isKeepAlive: true,
+                    isAffix: false,
+                    isIframe: false,
+                    roles: ['admin', 'common'],
+                    icon: 'ele-Menu',
+                },
+            },
+            {
                 path: '/menu',
                 name: 'SystemMenu',
                 component: () => import('@/views/system/menu/SystemMenu.vue'),

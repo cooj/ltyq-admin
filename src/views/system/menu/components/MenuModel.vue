@@ -20,7 +20,8 @@
                 <el-input v-model="form.data.title_en" maxlength="30" placeholder="请输入英文菜单名称" clearable />
             </el-form-item>
             <el-form-item label="链接地址" prop="href">
-                <el-input v-model="form.data.href" maxlength="200" placeholder="" clearable />
+                <el-input v-model="form.data.href" maxlength="200" placeholder="" clearable
+                    :disabled="defData.type === 2" />
             </el-form-item>
             <el-form-item label="排序">
                 <el-input-number v-model="form.data.sort" :min="0" :max="10000" controls-position="right" placeholder=""
@@ -184,6 +185,4 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
